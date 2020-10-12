@@ -37,7 +37,7 @@ export default class TaskForm extends Component {
 					<Paper className="paperWidth" zDepth={1}>
 						<div className="marginList">
 							<TextField 
-								hintText="O que preciso fazer?"
+								hintText="Digite aqui"
 								fullWidth
 								className="AddText" 
 								onChange={(e) => this.setState({ inputValue: e.target.value })}
@@ -48,7 +48,7 @@ export default class TaskForm extends Component {
 					<RaisedButton 
 						type="submit"
 						variant="contained" 
-						label='Adicionar Tarefa' 
+						label='Inserir' 
 						primary  
 						onClick={this.onClick}
 						style={{marginLeft: 10, height: 50}}

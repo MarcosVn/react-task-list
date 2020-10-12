@@ -44,7 +44,7 @@ export default class Task extends Component {
 				className="listItemWidth"
         rightIconButton={
 					<div className="flexDiv">
-						<small style={{marginTop: 10}}>{this.props.createdAt}</small>
+						<small style={{marginTop: 10, fontSize: '0.7rem'}}>{this.props.createdAt}</small>
 						<IconButton 
 							tooltip='Deletar' 
 							tooltipPosition='top-right' 
@@ -61,14 +61,15 @@ export default class Task extends Component {
 				}
       >
 
-        <div className="flexDiv" style={{maxWidth: '60%'}}>
+        <div className="flexDiv" style={{maxWidth: '10%'}}>
 					<li
 						id={this.props.id} 
 						contentEditable="true" 
 						onBlur={this.onBlur} 
 						style={listStyles}
 					>
-            {this.props.task}
+						<div style={{maxWidth: 350}}>{this.props.task}</div>
+            
           </li>
         </div>
 		</ListItem>
