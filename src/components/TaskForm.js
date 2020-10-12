@@ -23,7 +23,7 @@ export default class TaskForm extends Component {
 			return
 		}
 		else {
-			const form = document.getElementById("myForm");
+			const form = document.getElementById("taskForm");
 			form.reset();
 			this.props.handleClick(task);
 			this.setState({ inputValue: ''});
@@ -33,29 +33,24 @@ export default class TaskForm extends Component {
 	render() {
 		return(
 			<MuiThemeProvider>
-				<div>
-					<form id="myForm">
+				<form id="taskForm">
 					<Paper className="listItemWidth" zDepth={1}>
-					<div className="marginList">
-						<TextField 
-							hintText="O que devo fazer?"
-							className="AddText" 
-							fullWidth
-							onChange={(e) => this.setState({ inputValue: e.target.value })}
-						>
-						</TextField>
-					</div>
-
+						<div className="marginList">
+							<TextField 
+								hintText="O que preciso fazer?"
+								className="AddText" 
+								onChange={(e) => this.setState({ inputValue: e.target.value })}
+							/>	
+						</div>
 					</Paper>
-						<br/>
-						<RaisedButton 
-							type="submit" 
-							label='Adicionar Tarefa' 
-							primary  
-							onClick={this.onClick} 
-						/>
-					</form>
-				</div>
+
+					<RaisedButton 
+						type="submit" 
+						label='Adicionar Tarefa' 
+						primary  
+						onClick={this.onClick} 
+					/>
+				</form>
 			</MuiThemeProvider>
 		)
 	}

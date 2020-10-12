@@ -13,8 +13,10 @@ import './App.css';
 export default class App extends Component {
   constructor() {
     super();
+    let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
     this.state = {
-      tasks: [],
+      tasks: existingTasks,
       open: false,
     }
     this.handleClick = this.handleClick.bind(this);
@@ -23,16 +25,17 @@ export default class App extends Component {
   }
 
   handleClick(task) {
-    this.setState({
-      tasks: [
-        ...this.state.tasks,
-        {
-          id: uuid(),
-          task: task,
-          checked: false,
-        }
-      ]
-    })
+    const currentTasks = [
+      ...this.state.tasks,
+      {
+        id: uuid(),
+        task: task,
+        checked: false,
+      }
+    ]
+
+    this.setState({ tasks: currentTasks })
+    localStorage.setItem('tasks', JSON.stringify(currentTasks));
   }
 
   handleRemove(id) {
@@ -42,6 +45,8 @@ export default class App extends Component {
       tasks: currentTasks,
       open: true,
     });
+
+    localStorage.setItem('tasks', JSON.stringify(currentTasks));
   }
 
   handleCheck(id) {
@@ -53,6 +58,8 @@ export default class App extends Component {
     this.setState({
       tasks: currentTasks,
     });
+
+    localStorage.setItem('tasks', JSON.stringify(currentTasks));
   } 
 
   handleRequestClose = () => {

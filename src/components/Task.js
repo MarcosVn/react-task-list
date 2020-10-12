@@ -45,7 +45,10 @@ export default class Task extends Component {
 						>
 							<DeleteIcon/>
 						</IconButton>
-          	<Checkbox onCheck={this.onCheck} className="marginIco" /> 									
+						<Checkbox 
+							onCheck={this.onCheck} 
+							checked={this.props.checked} 
+							className="marginIco" /> 									
 					</div>
 				}
       >
