@@ -19,9 +19,11 @@ export default class App extends Component {
       tasks: existingTasks,
       open: false,
     }
+    
     this.handleClick = this.handleClick.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   handleClick(task) {
@@ -60,7 +62,24 @@ export default class App extends Component {
     });
 
     localStorage.setItem('tasks', JSON.stringify(currentTasks));
-  } 
+  }
+  
+  handleBlur(id, newValue) {
+    let currentTask = this.state.tasks.filter(task => task.id === id);
+    const tasks = this.state.tasks.filter(task => task.id !== id);
+    currentTask[0].task = newValue;
+
+    const currentTasks = [
+      ...tasks,
+      currentTask[0]
+    ]
+
+    this.setState({
+      tasks: currentTasks,
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(currentTasks));
+  }
 
   handleRequestClose = () => {
     this.setState({
@@ -85,7 +104,8 @@ export default class App extends Component {
           <TaskList 
             tasks={this.state.tasks}
             handleRemove={this.handleRemove} 
-            handleCheck={this.handleCheck} 
+            handleCheck={this.handleCheck}
+            handleBlur={this.handleBlur} 
           />
 
           <TaskForm handleClick={this.handleClick}/>

@@ -20,6 +20,7 @@ export default class Task extends Component {
 		super(props);
 		this.onClick = this.onClick.bind(this);
 		this.onCheck = this.onCheck.bind(this);
+		this.onBlur = this.onBlur.bind(this);
 	}
 
 	onClick(evt) {
@@ -30,8 +31,14 @@ export default class Task extends Component {
 		this.props.handleCheck(this.props.id)
 	}
 
+	onBlur(evt) {
+		let newValue = document.getElementById(this.props.id).textContent
+		this.props.handleBlur(this.props.id, newValue);
+	}
+
 	render() {
 		const listStyles = !this.props.checked ? listElementStyles: listElementCheckedStyles;
+		
 		return (
 			<ListItem 
 				className="listItemWidth"
@@ -39,7 +46,7 @@ export default class Task extends Component {
 					<div className="flexDiv">
 						<IconButton 
 							tooltip='Deletar' 
-							tooltipPosition='bottom-right' 
+							tooltipPosition='top-right' 
 							onClick={this.onClick} 
 							iconStyle={{color: '#ff0000'}}
 						>
@@ -53,7 +60,12 @@ export default class Task extends Component {
 				}
       >
         <div className="flexDiv">
-          <li style={listStyles}>
+					<li
+						id={this.props.id} 
+						contentEditable="true" 
+						onBlur={this.onBlur} 
+						style={listStyles}
+					>
             {this.props.task}
           </li>
         </div>

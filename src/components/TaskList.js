@@ -11,7 +11,8 @@ export default class TaskList extends Component {
     const {
       tasks,
       handleRemove,
-      handleCheck
+      handleCheck,
+      handleBlur
     } = this.props;
 
     const tasksList = tasks.map((task) => {
@@ -23,9 +24,10 @@ export default class TaskList extends Component {
           checked={task.checked}
           handleRemove={handleRemove}
           handleCheck={handleCheck}
+          handleBlur={handleBlur}
         />
       )
-    })
+    });
 
     return (
       <List className="marginList">

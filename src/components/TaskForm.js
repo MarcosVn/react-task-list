@@ -34,21 +34,24 @@ export default class TaskForm extends Component {
 		return(
 			<MuiThemeProvider>
 				<form id="taskForm">
-					<Paper className="listItemWidth" zDepth={1}>
+					<Paper className="paperWidth" zDepth={1}>
 						<div className="marginList">
 							<TextField 
 								hintText="O que preciso fazer?"
+								fullWidth
 								className="AddText" 
 								onChange={(e) => this.setState({ inputValue: e.target.value })}
 							/>	
 						</div>
 					</Paper>
-
+					
 					<RaisedButton 
-						type="submit" 
+						type="submit"
+						variant="contained" 
 						label='Adicionar Tarefa' 
 						primary  
-						onClick={this.onClick} 
+						onClick={this.onClick}
+						style={{marginLeft: 10, height: 50}}
 					/>
 				</form>
 			</MuiThemeProvider>
