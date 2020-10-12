@@ -61,7 +61,7 @@ export default class Task extends Component {
 				}
       >
 
-        <div className="flexDiv">
+        <div className="flexDiv" style={{maxWidth: '60%'}}>
 					<li
 						id={this.props.id} 
 						contentEditable="true" 

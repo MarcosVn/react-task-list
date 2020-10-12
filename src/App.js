@@ -100,7 +100,7 @@ export default class App extends Component {
     return (
       <MuiThemeProvider>
        <Paper style={paperSpacing}>
-          <h1 style={{ textAlign: 'center'}}>Lista de Tarefas</h1>
+          <h1 style={{ textAlign: 'center'}}>Minhas Tarefas</h1>
           
           <TaskList 
             tasks={this.state.tasks}
