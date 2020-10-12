@@ -26,12 +26,13 @@ export default class App extends Component {
     this.handleBlur = this.handleBlur.bind(this);
   }
 
-  handleClick(task) {
+  handleClick(text) {
     const currentTasks = [
       ...this.state.tasks,
       {
         id: uuid(),
-        task: task,
+        task: text,
+        createdAt: new Date().toLocaleString(),
         checked: false,
       }
     ]

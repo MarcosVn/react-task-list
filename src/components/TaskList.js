@@ -22,6 +22,7 @@ export default class TaskList extends Component {
           task={task.task} 
           id={task.id}
           checked={task.checked}
+          createdAt={task.createdAt}
           handleRemove={handleRemove}
           handleCheck={handleCheck}
           handleBlur={handleBlur}
