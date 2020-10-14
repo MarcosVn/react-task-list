@@ -1,34 +1,34 @@
 // External
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Snackbar from 'material-ui/Snackbar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
-import uuid from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 // Components
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import './App.css';
 
-export default class App extends Component {
-  constructor() {
-    super();
-    let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+const App = (props) => {
+  let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-    this.state = {
-      tasks: existingTasks,
-      open: false,
-    }
-    
-    this.handleClick = this.handleClick.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-  }
+  const [state, setState] = useState({ 
+    tasks: existingTasks,
+    open: false
+  });
 
-  handleClick(text) {
+  const paperSpacing = {
+    padding: 10,
+    marginTop: 50,
+    marginBottom: 100,
+    marginRight: 30,
+    marginLeft: 30
+  };
+
+  function handleClick(text) {
     const currentTasks = [
-      ...this.state.tasks,
+      ...state.tasks,
       {
         id: uuid(),
         task: text,
@@ -37,14 +37,14 @@ export default class App extends Component {
       }
     ]
 
-    this.setState({ tasks: currentTasks })
+    setState({ tasks: currentTasks });
     localStorage.setItem('tasks', JSON.stringify(currentTasks));
   }
 
-  handleRemove(id) {
-    const currentTasks = this.state.tasks.filter(task => task.id !== id);
+  function handleRemove(id) {
+    const currentTasks = state.tasks.filter(task => task.id !== id);
 
-    this.setState({
+    setState({
       tasks: currentTasks,
       open: true,
     });
@@ -52,22 +52,19 @@ export default class App extends Component {
     localStorage.setItem('tasks', JSON.stringify(currentTasks));
   }
 
-  handleCheck(id) {
-    const currentTasks = this.state.tasks.map((task) => {
+  function handleCheck(id) {
+    const currentTasks = state.tasks.map((task) => {
       if(task.id === id) task.checked = !task.checked
       return task;
     });
 
-    this.setState({
-      tasks: currentTasks,
-    });
-
+    setState({ tasks: currentTasks });
     localStorage.setItem('tasks', JSON.stringify(currentTasks));
   }
   
-  handleBlur(id, newValue) {
-    let currentTask = this.state.tasks.filter(task => task.id === id);
-    const tasks = this.state.tasks.filter(task => task.id !== id);
+  function handleBlur(id, newValue) {
+    let currentTask = state.tasks.filter(task => task.id === id);
+    const tasks = state.tasks.filter(task => task.id !== id);
     currentTask[0].task = newValue;
 
     const currentTasks = [
@@ -75,50 +72,43 @@ export default class App extends Component {
       currentTask[0]
     ]
 
-    this.setState({
+    setState({
       tasks: currentTasks,
     });
 
     localStorage.setItem('tasks', JSON.stringify(currentTasks));
   }
 
-  handleRequestClose = () => {
-    this.setState({
+  function handleRequestClose() {
+    setState({ 
+      tasks: state.tasks, 
       open: false
-    })
+    });
   }
+  
+  return (
+    <MuiThemeProvider>
+      <Paper style={paperSpacing}>
+        <h1 style={{ textAlign: 'center'}}>Minhas Tarefas</h1>
+        
+        <TaskList 
+          tasks={state.tasks}
+          handleRemove={handleRemove} 
+          handleCheck={handleCheck}
+          handleBlur={handleBlur} 
+        />
 
-  render() {
-    const paperSpacing = {
-      padding: 10,
-      marginTop: 50,
-      marginBottom: 100,
-      marginRight: 30,
-      marginLeft: 30
-    }
-    
-    return (
-      <MuiThemeProvider>
-       <Paper style={paperSpacing}>
-          <h1 style={{ textAlign: 'center'}}>Minhas Tarefas</h1>
-          
-          <TaskList 
-            tasks={this.state.tasks}
-            handleRemove={this.handleRemove} 
-            handleCheck={this.handleCheck}
-            handleBlur={this.handleBlur} 
-          />
+        <TaskForm handleClick={handleClick}/>
 
-          <TaskForm handleClick={this.handleClick}/>
-
-          <Snackbar
-            open={this.state.open}
-            message="Tarefa removida com sucesso!"
-            autoHideDuration={2000}
-            onRequestClose={this.handleRequestClose}
-          />
-        </Paper>
-      </MuiThemeProvider>
-    );
-  }
+        <Snackbar
+          open={state.open}
+          message="Tarefa removida com sucesso!"
+          autoHideDuration={2000}
+          onRequestClose={handleRequestClose}
+        />
+      </Paper>
+    </MuiThemeProvider>
+  );
 }
+
+export default App;

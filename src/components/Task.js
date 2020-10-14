@@ -1,78 +1,70 @@
-import React, { Component } from 'react';
+// External
+import React from 'react';
 import Checkbox from 'material-ui/Checkbox'
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import IconButton from 'material-ui/IconButton';
 import { ListItem } from 'material-ui/List';
 
+// Component styles
 import './Task.css';
 
-const listElementStyles = {
-	fontSize: 18
-}
-
-const listElementCheckedStyles = {
-	...listElementStyles,
-	textDecoration: 'line-through',
-}
-
-export default class Task extends Component {
-  constructor(props) {
-		super(props);
-		this.onClick = this.onClick.bind(this);
-		this.onCheck = this.onCheck.bind(this);
-		this.onBlur = this.onBlur.bind(this);
+const Task = (props) => {
+	const listElementStyles = { fontSize: 18 }
+	
+	const listElementCheckedStyles = {
+		...listElementStyles,
+		textDecoration: 'line-through',
 	}
 
-	onClick(evt) {
-	  this.props.handleRemove(this.props.id)
+	const listStyles = !props.checked ? listElementStyles: listElementCheckedStyles;
+
+	function handleClick(event) {
+	  props.handleRemove(props.id)
 	}
 
-	onCheck(evt) {
-		this.props.handleCheck(this.props.id)
+	function handleCheck(event) {
+		props.handleCheck(props.id)
 	}
 
-	onBlur(evt) {
-		let newValue = document.getElementById(this.props.id).textContent
-		this.props.handleBlur(this.props.id, newValue);
+	function handleBlur(event) {
+		let newValue = document.getElementById(props.id).textContent
+		props.handleBlur(props.id, newValue);
 	}
-
-	render() {
-		const listStyles = !this.props.checked ? listElementStyles: listElementCheckedStyles;
-		
-		return (
-			<ListItem 
-				className="listItemWidth"
-        rightIconButton={
-					<div className="flexDiv">
-						<small style={{marginTop: 10, fontSize: '0.7rem'}}>{this.props.createdAt}</small>
+	
+	return (
+		<ListItem 
+			className="listItemWidth"
+			rightIconButton={
+				<div className="flexDiv">
+					<small style={{marginTop: 10, fontSize: '0.7rem'}}>{props.createdAt}</small>
 						<IconButton 
 							tooltip='Deletar' 
 							tooltipPosition='top-right' 
-							onClick={this.onClick} 
+							onClick={handleClick} 
 							iconStyle={{color: '#ff0000'}}
 						>
 							<DeleteIcon/>
 						</IconButton>
 						<Checkbox 
-							onCheck={this.onCheck} 
-							checked={this.props.checked} 
-							className="marginIco" /> 									
-					</div>
-				}
-      >
-
-        <div className="flexDiv" style={{maxWidth: '10%'}}>
-					<li
-						id={this.props.id} 
-						contentEditable="true" 
-						onBlur={this.onBlur} 
-						style={listStyles}
-					>
-						<div style={{maxWidth: 350}}>{this.props.task}</div>
-            
-          </li>
-        </div>
+							onCheck={handleCheck} 
+							checked={props.checked} 
+							className="marginIco" 
+						/> 									
+				</div>
+			}
+		>
+			<div className="flexDiv" style={{maxWidth: '10%'}}>
+				<li
+					id={props.id} 
+					contentEditable="true" 
+					onBlur={handleBlur} 
+					style={listStyles}
+				>
+				<div style={{maxWidth: 350}}>{props.task}</div>
+				</li>
+			</div>
 		</ListItem>
-		)
-	}
+	)
 } 
+
+export default Task;

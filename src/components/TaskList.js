@@ -1,19 +1,18 @@
 // External
-import React, { Component } from 'react';
+import React from 'react';
 import List from 'material-ui/List';
 
 // Components
 import Task from './Task';
 import './Task.css';
 
-export default class TaskList extends Component {
-  render() {
+const TaskList = (props) => {
     const {
       tasks,
       handleRemove,
       handleCheck,
       handleBlur
-    } = this.props;
+    } = props;
 
     const tasksList = tasks.map((task) => {
       return (
@@ -35,5 +34,6 @@ export default class TaskList extends Component {
         <ul>{tasksList}</ul>
       </List>
     )
-  }
 }
+
+export default TaskList;
